@@ -7,23 +7,30 @@ const Home = () => {
 
     const getPost = async () => {
         try {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-                // fetch('https://jsonplaceholder.typicode.com/posts')
-                //     .then((response) => response.json())
-                //     .then((json) => console.log(json));                
-                const data = response.data;
-                console.log(data)
+            const response = await axios.get("https://jsonplaceholder.typicode.com/posts")                    
+            const data = response.data;
+            console.log(data);
+            setPost(data);
         } catch (error) {
-           console.log(error)
+            console.log(error)
         }
     }
 
     useEffect(() => {
         getPost();
-    }, [])
+    },[]);
 
     return (
-        <div>Home</div>
+        <div>
+            <h1>Ultimos posts</h1>
+            {post.length === 0 ? (<p>Carregando...</p>) : (
+                post.map((posts,index) =>(
+                    <div className='post' key={posts.id}>
+                    <h2>{posts.title}</h2>
+                    </div>
+                ))
+            )}
+        </div>
     )
 }
 
